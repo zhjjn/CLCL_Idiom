@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --job-name="curriculum_learning_magpie"
+#SBATCH --output="magpie_cl_train.%j.%N.out"
+#SBATCH --error="magpie_cl_train.%j.%N.err"
+#SBATCH --partition=gpux2
+#SBATCH --time=24
+
+conda activate test
+
+TOKENIZERS_PARALLELISM=false python MAGPIE_CL_Classification_cts.py --DataStream dist --DataVersion v1 --Model vanilla --Mode train --DataType random --Round 1 --Order Acending --Sample nosample --CTS True
+TOKENIZERS_PARALLELISM=false python MAGPIE_CL_Classification_cts.py --DataStream dist --DataVersion v1 --Model vanilla --Mode inference --DataType random --Round 1 --Order Acending --Sample nosample --CTS True
